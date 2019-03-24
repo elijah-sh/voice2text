@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="voice2text.mapper.WordsResultMapper">
+
+    <resultMap id="WordsResult" type="voice2text.entity.WordsResult">
+        <id column="id" jdbcType="DECIMAL" property="id" />
+        <result column="wc" jdbcType="VARCHAR" property="wc" />
+        <result column="wordBg" jdbcType="VARCHAR" property="wordBg" />
+        <result column="wordEd" jdbcType="VARCHAR" property="wordEd" />
+        <result column="wordsName" jdbcType="VARCHAR" property="wordsName" />
+        <result column="wp" jdbcType="VARCHAR" property="wp" />
+        <result column="alter_native" jdbcType="VARCHAR" property="alterNative" />
+        <result column="text_id" jdbcType="DECIMAL" property="textId" />
+        <result column="date_time" jdbcType="DATE" property="dateTime" />
+    </resultMap>
+
+    <insert id="insert" parameterType="voice2text.entity.WordsResult">
+        insert into words_result(id,wc,wordBg,wordEd, wordsName, wp, alter_native,text_id,date_time)
+        values (#{id,jdbcType=INTEGER},
+        #{wc,jdbcType=VARCHAR},
+        #{wordBg,jdbcType=VARCHAR},
+        #{wordEd,jdbcType=VARCHAR},
+        #{wordsName,jdbcType=VARCHAR},
+        #{wp,jdbcType=VARCHAR},
+        #{alterNative,jdbcType=VARCHAR},
+        #{textId,jdbcType=INTEGER},
+        #{dateTime})
+    </insert>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into words_result(id,wc,wordBg,wordEd, wordsName, wp, alter_native,text_id,date_time)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=INTEGER},
+            #{item.wc,jdbcType=VARCHAR},
+            #{item.wordBg,jdbcType=VARCHAR},
+            #{item.wordEd,jdbcType=VARCHAR},
+            #{item.wordsName,jdbcType=VARCHAR},
+            #{item.wp,jdbcType=VARCHAR},
+            #{item.alterNative,jdbcType=VARCHAR},
+            #{item.textId,jdbcType=INTEGER},
+            #{item.dateTime})
+        </foreach>
+    </insert>
+
+    <update id="batchUpdate" parameterType="java.util.Map">
+
+        <foreach collection="list" separator=";" item="item">
+            update words_result set
+
+            <if test="item.wc != null">
+                wc = #{item.wc,jdbcType=VARCHAR},
+            </if>
+            <if test="item.wordBg != null">
+                wordBg = #{item.wordBg,jdbcType=VARCHAR},
+            </if>
+            <if test="item.wordEd != null">
+                wordEd = #{item.wordEd,jdbcType=VARCHAR},
+            </if>
+            <if test="item.wordsName != null">
+                wordsName = #{item.wordsName,jdbcType=VARCHAR},
+            </if>
+            <if test="item.wp != null">
+                wp = #{item.wp,jdbcType=VARCHAR},
+            </if>
+            <if test="item.alterNative != null">
+                alter_native = #{item.alterNative,jdbcType=VARCHAR},
+            </if>
+            <if test="item.textId != null">
+                text_id = #{item.textId,jdbcType=INTEGER},
+            </if>
+            <if test="item.dateTime != null">
+                update_date = #{item.dateTime,jdbcType=VARCHAR}
+            </if>
+            where id = #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+
+</mapper>

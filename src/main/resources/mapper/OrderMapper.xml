@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="voice2text.mapper.OrderMapper">
+
+    <resultMap id="Order" type="voice2text.entity.Order">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="message_id" jdbcType="VARCHAR" property="messageId" />
+    </resultMap>
+    <insert id="insertOrder" parameterType="voice2text.entity.Order">
+        insert into mq_order(id,name ,message_id) values (#{id},#{name},#{messageId})
+    </insert>
+
+</mapper>

@@ -1,0 +1,72 @@
+spring:
+  rabbitmq:
+    addresses: 212.64.11.85
+    port: 5672                        # 是客户端的地址，不是浏览器管理端的                 #
+    username: guest
+    password: guest
+    virtual-host: /
+    connection-timeout: 15000
+    publisher-confirms: true
+    publisher-returns: true
+    listener:
+      simple:
+        concurrency: 5         # 五个通道
+        max-concurrency: 10     # 最大 10 个通道
+        acknowledge-mode: manual       # 默认情况下消息消费者是自动 ack （确认）消息的，如果要手动 ack（确认）则需要修改确认模式为 manual
+        prefetch: 1   #  需要并行1
+    template:
+      mandatory: true
+
+  http:
+    encoding:
+      charset: utf-8
+  jackson:
+    default-property-inclusion: non_null
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: ${MYSQL_URL:jdbc:mysql://212.64.11.85:3306/voice2text}?characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=true&allowMultiQueries=true
+    driver-class-name: com.mysql.jdbc.Driver
+    username: ${mysql_username:root}
+    password: ${MYSQL_PASSWORD:123456}
+
+# 配置freemarker
+  freemarker:
+    # 设置模板后缀名
+    suffix: .ftl
+    # 设置文档类型
+    content-type: text/html
+    # 设置页面编码格式
+    charset: UTF-8
+    # 设置页面缓存
+    cache: false
+    # 设置ftl文件路径
+    template-loader-path:
+    - classpath:/templates
+  # 设置静态文件路径，js,css等
+  mvc:
+    static-path-pattern: /static/**
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100Mb
+      max-request-size: 100Mb
+
+
+mybatis:
+  type-aliases-package: voice2text/entity        #所有Entity别名类所在包
+  mapper-locations: classpath*:mapper/*.xml
+
+logging:
+  level:
+    tk:
+      mybatis: trace
+server:
+  port: 8088
+
+path:
+  voice: E:/2.lfasr/
+  tmp: E:/2.lfasr/
+  text: E:/2.lfasr/

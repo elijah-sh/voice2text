@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="voice2text.mapper.TextMapper">
+
+    <resultMap id="Text" type="voice2text.entity.Text">
+        <id column="id" jdbcType="DECIMAL" property="id" />
+        <result column="bg" jdbcType="VARCHAR" property="bg" />
+        <result column="ed" jdbcType="VARCHAR" property="ed" />
+        <result column="onebest" jdbcType="VARCHAR" property="onebest" />
+        <result column="si" jdbcType="VARCHAR" property="si" />
+        <result column="speaker" jdbcType="VARCHAR" property="speaker" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="words_result_sum" jdbcType="DECIMAL" property="wordsResultSum" />
+        <result column="date_time" jdbcType="DATE" property="dateTime" />
+
+    </resultMap>
+
+    <insert id="insert" parameterType="voice2text.entity.Text" useGeneratedKeys="true" keyProperty="id">
+        insert into text(id,bg,ed,onebest, si, speaker, words_result_sum,date_time,title)
+        values (#{id,jdbcType=INTEGER},#{bg,jdbcType=VARCHAR},#{ed,jdbcType=VARCHAR},#{onebest,jdbcType=VARCHAR},
+        #{si,jdbcType=VARCHAR},#{speaker,jdbcType=VARCHAR},#{wordsResultSum,jdbcType=INTEGER},#{dateTime},#{title,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into text(id,bg,ed,onebest, si, speaker, words_result_sum,date_time,title)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=INTEGER},
+            #{item.bg,jdbcType=VARCHAR},
+            #{item.ed,jdbcType=VARCHAR},
+            #{item.onebest,jdbcType=VARCHAR},
+            #{item.si,jdbcType=VARCHAR},
+            #{item.speaker,jdbcType=VARCHAR},
+            #{item.wordsResultSum,jdbcType=INTEGER},
+            #{item.dateTime},
+            #{item.title,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+</mapper>
