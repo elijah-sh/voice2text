@@ -47,12 +47,6 @@ public class Voice2TextController {
     private TextService textService;
 
 
-
-    @RequestMapping("/test")
-    public String testCreateOrder(@RequestParam String path) throws Exception {
-        return textService.createText(path);
-    }
-
     /**
      * 上传 带有数据的Excel
      * @param request
@@ -63,8 +57,8 @@ public class Voice2TextController {
     public Map<String,Object> uploadFile(HttpServletRequest request, VoiceTextFile dto){
         Map<String,Object> map = new HashMap<>();
         log.info("上传的结果{}" ,dto.toString());
-       Boolean flag = textService.handleFile(request, dto);
-        if (flag){
+       String flag = textService.handleFile(request, dto);
+        if ("success".equals(flag)){
             map.put("success",true);
             map.put("code",200);
         }
@@ -156,7 +150,7 @@ public class Voice2TextController {
     @RequestMapping("/to/text")
     public Map<String,Object> toText(int id, HttpServletRequest request) throws InterruptedException {
         Map<String,Object> map = new HashMap<>();
-        Boolean flag = false;
+        String flag = "error";
         /**
          * 1、上传音频 <br/>
          * 2、解析音频 <br/>
@@ -176,7 +170,15 @@ public class Voice2TextController {
                         || "mp4".equals(type)|| "pcm".equals(type)
                         || "wav".equals(type)|| "3gp".equals(type)
                         || "amr".equals(type)|| "wma".equals(type)) {
-                    flag =  textService.handleFile(request,dto);
+                    flag = textService.handleFile(request, dto);
+                    if ("success".equals(flag)){
+                        map.put("success",true);
+                        map.put("code",200);
+                    }else {
+                        map.put("success",false);
+                        map.put("data","音频类型有误,请检查"+flag);
+                        return map;
+                    }
                 }else {
                     map.put("success",false);
                     map.put("data","音频类型有误,请检查");

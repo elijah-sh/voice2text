@@ -64,9 +64,9 @@ logging:
     tk:
       mybatis: trace
 server:
-  port: 8088
+  port: 8080
 
 path:
-  voice: E:/2.lfasr/
-  tmp: E:/2.lfasr/
-  text: E:/2.lfasr/
+  voice: /home/
+  tmp: /home/
+  text: /home/

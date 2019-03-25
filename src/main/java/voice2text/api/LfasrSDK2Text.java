@@ -6,6 +6,7 @@ import com.iflytek.msp.cpdb.lfasr.exception.LfasrException;
 import com.iflytek.msp.cpdb.lfasr.model.LfasrType;
 import com.iflytek.msp.cpdb.lfasr.model.Message;
 import com.iflytek.msp.cpdb.lfasr.model.ProgressStatus;
+import lombok.extern.slf4j.Slf4j;
 import voice2text.entity.Text;
 import voice2text.service.WebSocketServer;
 import voice2text.utils.FastJsonConvertUtil;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
  * @author white
  * 
  */
+@Slf4j
 public class LfasrSDK2Text {
 
     // 原始音频存放地址
@@ -42,6 +44,7 @@ public class LfasrSDK2Text {
     private static int sleepSecond = 20;
 
     public static String   toText(String  local_file) {
+        log.debug("转文本的录音路径是：[]" + local_file);
         // 初始化LFASRClient实例
         LfasrClientImp lc = null;
         try {

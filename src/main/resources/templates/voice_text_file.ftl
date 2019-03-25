@@ -224,11 +224,9 @@
     }
 
     function sendMessage(message) {
-        $('#socket').html(message);
+        $('#socket').html('转换中，请等待，请勿关闭窗口！！！ ' + '\n' + message);
         if (message === "保存文件") {
             console.log("messageWin 已关闭");
-
-
         }
     }
 

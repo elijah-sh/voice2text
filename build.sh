@@ -2,6 +2,6 @@
 
 mvn clean package -Dmaven.test.skip=true -U
 
-docker build -t hub.c.163.com/shenshuaihu/voice2text .
+docker build -t voice2text:1.0 .
 
-# docker push hub.c.163.com/shenshuaihu/voice2text
+#docker push hub.c.163.com/shenshuaihu/voice2text
