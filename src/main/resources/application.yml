@@ -70,3 +70,17 @@ path:
   voice: /home/
   tmp: /home/
   text: /home/
+
+
+xunfei:
+  # APP ID
+  app_id: 5c8ddb3b
+  # secret key
+  secret_key: 13e799f932ac052d62d36daee4b6d384
+  # we support both http and https prototype
+  lfasr_host: http://raasr.xfyun.cn/api
+  # file piece size
+  file_piece_size: 10485760
+  # store path: this is not the store path for the result json file, but the path for the file piece during upload
+  store_path:  E\:/2.lfasr
+

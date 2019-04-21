@@ -1,7 +1,9 @@
 package voice2text.api;
 
 import com.alibaba.fastjson.JSON;
+import com.iflytek.msp.cpdb.lfasr.client.LfasrClient;
 import com.iflytek.msp.cpdb.lfasr.client.LfasrClientImp;
+
 import com.iflytek.msp.cpdb.lfasr.exception.LfasrException;
 import com.iflytek.msp.cpdb.lfasr.model.LfasrType;
 import com.iflytek.msp.cpdb.lfasr.model.Message;
@@ -24,8 +26,8 @@ import java.util.stream.Collectors;
 public class LfasrSDKAPI {
 
     // 原始音频存放地址
-    private static final String local_file = "E:/2.lfasr/更新的世界.m4a";
-    private static final String local_save_file = "E:/2.lfasr/listen.txt";
+    private static final String local_file = "E:/user/frg/20190414_072242.m4a";
+    private static final String local_save_file = "E:/2.lfasr/20190414_072242.txt";
 
     /*
      * 转写类型选择：标准版和电话版(旧版本, 不建议使用)分别为：
@@ -40,7 +42,7 @@ public class LfasrSDKAPI {
         // 初始化LFASRClient实例
         LfasrClientImp lc = null;
         try {
-            lc = LfasrClientImp.initLfasrClient();
+            lc = voice2text.api.LfasrClientImp.initLfasrClient();
         } catch (LfasrException e) {
             // 初始化异常，解析异常描述信息
             Message initMsg = JSON.parseObject(e.getMessage(), Message.class);
@@ -52,6 +54,7 @@ public class LfasrSDKAPI {
         String task_id = "";
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("has_participle", "true");
+      //  params.put("secret_key", "13e799f932ac052d62d36daee4b6d384");
         //合并后标准版开启电话版功能
         //params.put("has_seperate", "true");
         try {
@@ -126,7 +129,7 @@ public class LfasrSDKAPI {
                 System.out.println(jsonString);
                 List<Text> textList =  FastJsonConvertUtil.jsonToList(jsonString, Text.class);
 
-               // FileUtils.saveFile(local_save_file,jsonString);
+                 FileUtils.saveFile(local_save_file,jsonString);
 
                 String a = textList.stream().map(e -> e.getOnebest()).collect(Collectors.joining()).toString();
                 System.out.println(a );
