@@ -119,8 +119,8 @@
             <version>3.8.1</version>
         </dependency>
         <dependency>
-            <groupId>com.xfyun</groupId>
-            <artifactId>dmjdbcdriver</artifactId>
+            <groupId>fragrant.zzc</groupId>
+            <artifactId>w.v2t</artifactId>
             <version>1.0</version>
         </dependency>
 
