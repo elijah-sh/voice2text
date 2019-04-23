@@ -2,7 +2,6 @@ package voice2text.service;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
-import com.iflytek.msp.cpdb.lfasr.client.LfasrClientImp;
 import com.iflytek.msp.cpdb.lfasr.exception.LfasrException;
 import com.iflytek.msp.cpdb.lfasr.model.Message;
 import org.apache.commons.lang3.StringUtils;

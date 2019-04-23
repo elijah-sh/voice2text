@@ -13,8 +13,10 @@ package voice2text.config.xunfei;
  */
 import com.iflytek.msp.cpdb.lfasr.exception.ConfigException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import voice2text.entity.SysConfig;
 import voice2text.mapper.SysConfigMapper;
+import voice2text.service.SysConfigService;
 
 import javax.validation.constraints.Max;
 import java.io.IOException;
@@ -28,21 +30,22 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.Map.Entry;
 
-
+@Component
 public class PropConfig {
-    public PropConfig() {
-    }
+
+
+   private static SysConfigService sysConfigService;
 
     @Autowired
-    private SysConfigMapper mapper;
+    public void setSysConfigService(SysConfigService sysConfigService) {
+        PropConfig.sysConfigService = sysConfigService;
+    }
 
     public static   Map<String, String> LoadPoperties(String filePath) throws ConfigException {
 
         //  原逻辑读取配置文件 ， 现改为读取数据库
 
-        List<SysConfig> configs = new ArrayList<>();
-       // configs = mapper.select();
-
+        List<SysConfig> configs = sysConfigService.getSysConfigData();
 
         Map<String, String> poperties = new HashMap();
 
@@ -50,10 +53,9 @@ public class PropConfig {
             poperties.put(sysConfig.getKey(), sysConfig.getValue());
         }
         return poperties;
-       /*
-        if (filePath != null && !"".equals(filePath.trim())) {
-            filePath = filePath.trim();
-            InputStream is = PropConfig.class.getClassLoader().getResourceAsStream(filePath);
+
+        /*if (filePath != null && !"".equals(filePath.trim())) {
+          //  InputStream is = PropConfig.class.getClassLoader().getResourceAsStream(filePath);
             Properties prop = new Properties();
 
             try {

@@ -9,8 +9,7 @@
         <result column="des" jdbcType="VARCHAR" property="des" />
     </resultMap>
     <select id="select" resultMap="BaseResultMap">
-    select id, title_name, value, text_name, des
-    from sys_comfig
-  </select>
+        select id, `key`, `value`, `des` from sys_config
+   </select>
 
 </mapper>

@@ -1,9 +1,6 @@
 package voice2text.api;
 
 import com.alibaba.fastjson.JSON;
-import com.iflytek.msp.cpdb.lfasr.client.LfasrClient;
-import com.iflytek.msp.cpdb.lfasr.client.LfasrClientImp;
-
 import com.iflytek.msp.cpdb.lfasr.exception.LfasrException;
 import com.iflytek.msp.cpdb.lfasr.model.LfasrType;
 import com.iflytek.msp.cpdb.lfasr.model.Message;
@@ -26,7 +23,7 @@ import java.util.stream.Collectors;
 public class LfasrSDKAPI {
 
     // 原始音频存放地址
-    private static final String local_file = "E:/user/frg/20190414_072242.m4a";
+    private static final String local_file = "E:/2.lfasr/lfasr.wav";
     private static final String local_save_file = "E:/2.lfasr/20190414_072242.txt";
 
     /*
@@ -42,7 +39,7 @@ public class LfasrSDKAPI {
         // 初始化LFASRClient实例
         LfasrClientImp lc = null;
         try {
-            lc = voice2text.api.LfasrClientImp.initLfasrClient();
+            lc = LfasrClientImp.initLfasrClient();
         } catch (LfasrException e) {
             // 初始化异常，解析异常描述信息
             Message initMsg = JSON.parseObject(e.getMessage(), Message.class);
