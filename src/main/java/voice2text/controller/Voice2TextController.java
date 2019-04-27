@@ -170,7 +170,9 @@ public class Voice2TextController {
                         || "mp4".equals(type)|| "pcm".equals(type)
                         || "wav".equals(type)|| "3gp".equals(type)
                         || "amr".equals(type)|| "wma".equals(type)) {
+
                     flag = textService.handleFile(request, dto);
+
                     if ("success".equals(flag)){
                         map.put("success",true);
                         map.put("code",200);
@@ -187,7 +189,7 @@ public class Voice2TextController {
             }
             WebSocketServer.sendInfo("处理完成"
                     + "\n" +KeyUtil.getNowDateTime(),null);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             map.put("success",false);
             map.put("data","error" + "处理失败" +"#"+e.getMessage());

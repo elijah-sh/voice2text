@@ -24,18 +24,22 @@ import com.iflytek.msp.cpdb.lfasr.model.UploadParams;
 import com.iflytek.msp.cpdb.lfasr.util.FileUtil;
 import com.iflytek.msp.cpdb.lfasr.util.StringUtil;
 import com.iflytek.msp.cpdb.lfasr.util.VersionUtil;
-import com.iflytek.msp.cpdb.lfasr.worker.HttpWorker;
 import com.iflytek.msp.cpdb.lfasr.worker.ResumeWorker;
-import com.iflytek.msp.cpdb.lfasr.worker.UploadWorker;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import voice2text.config.xunfei.HttpWorker;
 import voice2text.config.xunfei.PropConfig;
+import voice2text.config.xunfei.UploadWorker;
 import voice2text.entity.SysConfig;
+import voice2text.service.SysConfigService;
 
+@Component
 public  class LfasrClientImp  {
     private static final Logger LOGGER = Logger.getLogger(LfasrClientImp.class);
     private static String POPERTIES_FILEPATH = "config.properties";
@@ -51,20 +55,27 @@ public  class LfasrClientImp  {
     public static String SERV_STORE_PATH_VAL = "";
     private static String err_msg = null;
 
+    private static SysConfigService sysConfigService;
 
-      static {
-            Object poperties = new HashMap();
+    @Autowired
+    public void setSysConfigService(SysConfigService sysConfigService) {
+        LfasrClientImp.sysConfigService = sysConfigService;
+    }
+    //  static {
+    public void getCpnfig() {
+          Map<String, String> poperties = new HashMap();
           List<SysConfig> configs = new ArrayList<>();
-           // configs = mapper.select();
+          configs = sysConfigService.getSysConfigData();
 
           for (SysConfig sysConfig : configs) {
-            //  poperties.put(sysConfig.getKey(), sysConfig.getValue());
+              poperties.put(sysConfig.getKey(), sysConfig.getValue());
           }
-        try {
-            poperties = PropConfig.LoadPoperties(POPERTIES_FILEPATH);
-        } catch (ConfigException var3) {
-            err_msg = "{\"ok\":\"-1\", \"err_no\":\"26100\", \"failed\":\"转写配置文件错误!\", \"data\":\"\"}";
-        }
+          /*try {
+           // poperties = PropConfig.LoadPoperties(POPERTIES_FILEPATH);
+
+        } catch (Exception var3) {
+            err_msg = "{\"ok\":\"-1\", \"err_no\":\"26100\", \"failed\":\"读取数据库config配置文件错误!\", \"data\":\"\"}";
+        }*/
 
         SERV_APP_ID_VAL = (String)((Map)poperties).get(POPERTIES_APP_ID_TG);
         SERV_SECRET_KEY_VAL = (String)((Map)poperties).get(POPERTIES_SERCET_KEY_TG);
@@ -142,6 +153,7 @@ public  class LfasrClientImp  {
     }
 
     public Message lfasrUpload(String local_file, LfasrType lfasr_type, HashMap<String, String> params) throws LfasrException {
+        getCpnfig();
         boolean isExist = FileUtil.isExist(local_file);
         if (!isExist) {
             LOGGER.error(String.format("[COMPENT]-%s [PROCESS]-%s [ID]-%s [STATUS]-%s [MEASURE]-%s [DEF]-%s", "CLIENT", "LfasrClientImp", "", "", "(-1) ms", "{\"ok\":\"-1\", \"err_no\":\"26201\", \"failed\":\"转写参数上传文件不能为空或文件不存在!\", \"data\":\"\"}"));

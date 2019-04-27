@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.iflytek.msp.cpdb.lfasr.exception.LfasrException;
 import com.iflytek.msp.cpdb.lfasr.model.Message;
+import com.iflytek.msp.cpdb.lfasr.util.FileUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,21 +60,24 @@ public class TextService {
 
     private static final String local_file = "E:/2.lfasr/";
     private static final String local_file_JSON = ".json";
-    private static final String local_voice_file = "E:/2.lfasr/更新的世界.m4a";
+    private static final String local_voice_file = "E:/2.lfasr/201904242237_35.wav";
 
     public String createText(String path){
 
         if (StringUtils.isEmpty(path)) {
-            return "转换出错__输入为空！";
+         //   return "转换出错__输入为空！";
+            throw new RuntimeException("转换出错__输入为空！" );
         }
-
+        boolean isExist = FileUtil.isExist(local_file);
+        System.out.println(isExist);
         String jsonString = "";
         try {
-            jsonString =  LfasrSDK2Text.toText(path);
+            System.out.println("转写配置文件store_path " + path);
+            jsonString =  LfasrSDK2Text.toText(local_voice_file);
         } catch (RuntimeException e) {
             // 初始化异常，解析异常描述信息
             e.getMessage();
-            return "转换出错："+e.getMessage();
+            throw new RuntimeException("转换出错："+e.getMessage() );
         }
         List<Text> textList = FastJsonConvertUtil.jsonToList(jsonString, Text.class);
 
@@ -118,13 +122,11 @@ public class TextService {
 
         } catch (IOException e) {
             e.printStackTrace();
-            return "转换文本时错误" + e.getMessage();
+            throw new RuntimeException("转换文本时错误" + e.getMessage());
         }
 
         try {
            // WebSocketServer.sendInfo("解析音频",null);
-
-
             WebSocketServer.sendInfo("转换文字"
                     + "\n" +KeyUtil.getNowDateTime(),null);
 
@@ -137,15 +139,16 @@ public class TextService {
                     "." +
                     "txt");
             dto.setUpdateDate(new Date());
+            FileUtils.saveFile(dto.getTextPath() ,text);
+
             voiceTextFileMapper.updateByPrimaryKey(dto);
 
             WebSocketServer.sendInfo("保存文件"
                     + "\n" +KeyUtil.getNowDateTime(),null);
-            FileUtils.saveFile(dto.getTextPath() ,text);
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "保存文件时错误" + e.getMessage();
+            throw new RuntimeException("保存文件时错误" + e.getMessage());
         }
         return "success";
 

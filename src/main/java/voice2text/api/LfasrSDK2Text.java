@@ -62,7 +62,7 @@ public class LfasrSDK2Text {
         //合并后标准版开启电话版功能
         //params.put("has_seperate", "true");
         try {
-            // 上传音频文件
+            // 解析上传的音频文件
             Message uploadMsg = lc.lfasrUpload(local_file, type, params);
 
             // 判断返回值
@@ -92,7 +92,7 @@ public class LfasrSDK2Text {
         while (true) {
             try {
                 // 等待20s在获取任务进度
-                Thread.sleep(sleepSecond * 1000);
+                Thread.sleep(sleepSecond * 100);
                 System.out.println("waiting ...");
                 WebSocketServer.sendInfo("音频转化中，waiting ... "+
                           "\n" +KeyUtil.getNowDateTime(),null);
@@ -111,7 +111,9 @@ public class LfasrSDK2Text {
                     System.out.println("task was fail. task_id:" + task_id);
                     System.out.println("ecode=" + progressMsg.getErr_no());
                     System.out.println("failed=" + progressMsg.getFailed());
-
+                    throw new RuntimeException("任务失败"+progressMsg.getErr_no()
+                            + "ecode=" + progressMsg.getErr_no()
+                            + "failed=" + progressMsg.getFailed());
 
                 } else {
                     ProgressStatus progressStatus = JSON.parseObject(progressMsg.getData(), ProgressStatus.class);
@@ -130,6 +132,7 @@ public class LfasrSDK2Text {
                 Message progressMsg = JSON.parseObject(e.getMessage(), Message.class);
                 System.out.println("ecode=" + progressMsg.getErr_no());
                 System.out.println("failed=" + progressMsg.getFailed());
+                throw new RuntimeException("转换失败");
             }
         }
         String jsonString = "";

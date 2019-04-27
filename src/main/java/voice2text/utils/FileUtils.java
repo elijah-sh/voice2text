@@ -67,7 +67,7 @@ public class FileUtils {
             printWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
-            return e.getMessage();
+            throw new RuntimeException(e.getMessage());
         } finally {
             printWriter.close();
         }

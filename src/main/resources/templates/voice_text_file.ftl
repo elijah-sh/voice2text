@@ -125,7 +125,7 @@
                         || "mp4"==type|| "pcm"==type
                         || "wav"==type|| "3gp"==type
                         || "amr"==type|| "wma"==type) {
-                    f1();
+
                     toText(data.id)
                 }else {
                     layer.msg("音频类型有误,请检查!");
@@ -177,6 +177,9 @@
             data : {"id" : id } ,
             success : function(data) {
                 if(data.success) {
+
+                    f1();
+
                     layer.close(messageWin);
                     $('#message').addClass("hide"); //取消继续隐藏
                     // 刷新数据
