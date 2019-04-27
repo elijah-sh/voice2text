@@ -73,7 +73,7 @@ public class TextService {
         String jsonString = "";
         try {
             System.out.println("转写配置文件store_path " + path);
-            jsonString =  LfasrSDK2Text.toText(local_voice_file);
+            jsonString =  LfasrSDK2Text.toText(path);
         } catch (RuntimeException e) {
             // 初始化异常，解析异常描述信息
             e.getMessage();
