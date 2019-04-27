@@ -125,7 +125,7 @@
                         || "mp4"==type|| "pcm"==type
                         || "wav"==type|| "3gp"==type
                         || "amr"==type|| "wma"==type) {
-
+                    f1();
                     toText(data.id)
                 }else {
                     layer.msg("音频类型有误,请检查!");
@@ -145,31 +145,15 @@
             }
         });
 
-        function f1() {
 
-            $('#message').removeClass("hide");
-
-             messageWin =  layer.open({
-                type : 1,
-                shade : 0.4,
-                title : '正在执行',
-                shadeClose: true, //点击遮罩关闭层
-                area : [ '300px', '250px' ], //显示空间
-                content : $('#message'), //捕获的元素
-                cancel : function(index) {
-                    layer.close(messageWin);
-                    $('#message').addClass("hide"); //取消继续隐藏
-                }
-            });
-
-            // 改变状态
-
-        }
 
       }); // lay over
 
 
     function toText(id) {
+
+
+
         $.ajax({
            // url : BaseUrl+'/to/text',
             url : '/to/text',
@@ -177,22 +161,45 @@
             data : {"id" : id } ,
             success : function(data) {
                 if(data.success) {
-
-                    f1();
-
                     layer.close(messageWin);
                     $('#message').addClass("hide"); //取消继续隐藏
                     // 刷新数据
                     $(".layui-laypage-btn")[0].click();
 
                 } else {
-                    layer.msg(data.data);
+                    layer.close(messageWin);
+                    //eg1
+                    layer.confirm(data.data, {icon: 3, title:'失败提示'}, function(index){
+                        layer.close(index);
+                    });
+                    $('#message').addClass("hide"); //取消继续隐藏
                 }
              },
             error : function() {
 
             }
         });  // ajax结束
+
+    }
+
+    function f1() {
+
+        $('#message').removeClass("hide");
+
+        messageWin =  layer.open({
+            type : 1,
+            shade : 0.4,
+            title : '正在执行',
+            shadeClose: true, //点击遮罩关闭层
+            area : [ '300px', '250px' ], //显示空间
+            content : $('#message'), //捕获的元素
+            cancel : function(index) {
+                layer.close(messageWin);
+                $('#message').addClass("hide"); //取消继续隐藏
+            }
+        });
+
+        // 改变状态
 
     }
 

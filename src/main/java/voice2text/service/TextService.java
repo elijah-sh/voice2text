@@ -60,7 +60,7 @@ public class TextService {
 
     private static final String local_file = "E:/2.lfasr/";
     private static final String local_file_JSON = ".json";
-    private static final String local_voice_file = "E:/2.lfasr/201904242237_35.wav";
+    private static final String local_voice_file = "E:/2.lfasr/201937_35.wav";
 
     public String createText(String path){
 

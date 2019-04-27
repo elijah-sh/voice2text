@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-import com.iflytek.msp.cpdb.lfasr.worker.UploadThread;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import voice2text.api.LfasrClientImp;
@@ -88,7 +87,6 @@ public class UploadWorker {
                     UploadThread ut = new UploadThread(this.upParams, this.file_piece_size, fr);
                     hbt = new Thread(ut);
                     hbt.start();
-
                     try {
                         if (!((String)this.upParams.getParams().get("not_wait")).equalsIgnoreCase("true")) {
                             hbt.join();

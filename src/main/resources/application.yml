@@ -27,7 +27,7 @@ spring:
 
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: ${MYSQL_URL:jdbc:mysql://212.64.11.85:3306/voice2text}?characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=true&allowMultiQueries=true
+    url: ${MYSQL_URL:jdbc:mysql://212.64.11.85:3306/voice2text}?useSSL=false&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=true&allowMultiQueries=true
     driver-class-name: com.mysql.jdbc.Driver
     username: ${mysql_username:root}
     password: ${MYSQL_PASSWORD:elijah}
@@ -64,13 +64,13 @@ logging:
     tk:
       mybatis: trace
 server:
-  port: 8088
+  port: 8080
 
-#path:
-#  voice: /home/
-#  tmp: /home/
-#  text: /home/
 path:
-  voice: E:/2.lfasr/
-  tmp: E:/2.lfasr/
-  text: E:/2.lfasr/
+  voice: /home/
+  tmp: /home/
+  text: /home/
+#path:
+#  voice: E:/2.lfasr/
+#  tmp: E:/2.lfasr/
+#  text: E:/2.lfasr/
