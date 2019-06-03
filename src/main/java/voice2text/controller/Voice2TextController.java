@@ -6,6 +6,8 @@
 package voice2text.controller;
 
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
@@ -40,6 +42,7 @@ import java.util.Random;
  * @data: 2019-03-17 16:12
  */
 @RestController
+@Api(tags = "语音转化相关接口", description = "重要的操作，也是核心的操作")
 @Slf4j
 public class Voice2TextController {
 
@@ -53,6 +56,7 @@ public class Voice2TextController {
      * @param dto
      * @return
      */
+    @ApiOperation("上传 带有数据的Excel")
     @PostMapping(value = "/upload/file")
     public Map<String,Object> uploadFile(HttpServletRequest request, VoiceTextFile dto){
         Map<String,Object> map = new HashMap<>();
