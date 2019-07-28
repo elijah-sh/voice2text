@@ -6,6 +6,8 @@
 package voice2text.controller;
 
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
@@ -40,6 +42,7 @@ import java.util.Random;
  * @data: 2019-03-17 16:12
  */
 @RestController
+@Api(tags = "语音转化相关接口", description = "重要的操作，也是核心的操作")
 @Slf4j
 public class Voice2TextController {
 
@@ -53,6 +56,7 @@ public class Voice2TextController {
      * @param dto
      * @return
      */
+    @ApiOperation("上传 带有数据的Excel")
     @PostMapping(value = "/upload/file")
     public Map<String,Object> uploadFile(HttpServletRequest request, VoiceTextFile dto){
         Map<String,Object> map = new HashMap<>();
@@ -170,7 +174,9 @@ public class Voice2TextController {
                         || "mp4".equals(type)|| "pcm".equals(type)
                         || "wav".equals(type)|| "3gp".equals(type)
                         || "amr".equals(type)|| "wma".equals(type)) {
+
                     flag = textService.handleFile(request, dto);
+
                     if ("success".equals(flag)){
                         map.put("success",true);
                         map.put("code",200);
@@ -187,7 +193,7 @@ public class Voice2TextController {
             }
             WebSocketServer.sendInfo("处理完成"
                     + "\n" +KeyUtil.getNowDateTime(),null);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             map.put("success",false);
             map.put("data","error" + "处理失败" +"#"+e.getMessage());

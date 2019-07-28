@@ -5,6 +5,8 @@
  */
 package voice2text.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -15,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @data: 2019-03-19 23:04
  */
 @Controller
+@Api(tags = "主访问页相关接口", description = "提供用户相关的页面")
 public class IndexController {
 
     /**
      * 住访问页
      * @return
      */
+    @ApiOperation("主访问页")
     @RequestMapping("/")
     public String index() {
         return "voice_text_file";

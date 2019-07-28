@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="voice2text.mapper.SysConfigMapper">
+
+    <resultMap id="BaseResultMap" type="voice2text.entity.SysConfig">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="key" jdbcType="VARCHAR" property="key" />
+        <result column="value" jdbcType="VARCHAR" property="value" />
+        <result column="des" jdbcType="VARCHAR" property="des" />
+    </resultMap>
+    <select id="select" resultMap="BaseResultMap">
+        select id, `key`, `value`, `des` from sys_config
+   </select>
+
+</mapper>

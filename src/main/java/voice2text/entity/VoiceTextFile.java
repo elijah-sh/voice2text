@@ -1,5 +1,7 @@
 package voice2text.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +14,7 @@ import java.util.Date;
  * @Date: 2018/12/6 17:10
  * @Description:  用于上传时文件的实体类  数据库不做存储
  */
+@ApiModel("文件的实体类")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +26,7 @@ public class VoiceTextFile  {
     /**
      * 文件原名称
      */
+    @ApiModelProperty("文件原名称")
     private String titleName;
 
     /**
