@@ -1,0 +1,54 @@
+spring:
+  http:
+    encoding:
+      charset: utf-8
+  jackson:
+    default-property-inclusion: non_null
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: ${MYSQL_URL:jdbc:mysql://127.0.0.1:3306/voice2text}?characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=true&allowMultiQueries=true
+    driver-class-name: com.mysql.jdbc.Driver
+    username: ${mysql_username:root}
+    password: ${MYSQL_PASSWORD:123456}
+
+# 配置freemarker
+  freemarker:
+    # 设置模板后缀名
+    suffix: .ftl
+    # 设置文档类型
+    content-type: text/html
+    # 设置页面编码格式
+    charset: UTF-8
+    # 设置页面缓存
+    cache: false
+    # 设置ftl文件路径
+    template-loader-path:
+    - classpath:/templates
+  # 设置静态文件路径，js,css等
+  mvc:
+    static-path-pattern: /static/**
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100Mb
+      max-request-size: 100Mb
+
+
+mybatis:
+  type-aliases-package: voice2text/entity        #所有Entity别名类所在包
+  mapper-locations: classpath*:mapper/*.xml
+
+logging:
+  level:
+    tk:
+      mybatis: trace
+server:
+  port: 8080
+
+path:
+  voice: E:\user\frg
+  tmp: E:\user\frg
+  text: E:\user\frg
